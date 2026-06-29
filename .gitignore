@@ -15,5 +15,9 @@ desktop.ini
 # 提交给老师的说明文件（不上传 GitHub）
 README.txt
 
+# 课程论文（不上传 GitHub）
+report.tex
+report.pdf
+
 # 数据集中间文件（如不需要上传）
 # Burger_v2/
