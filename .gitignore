@@ -12,5 +12,8 @@ checkpoints_gan_*/
 Thumbs.db
 desktop.ini
 
+# 提交给老师的说明文件（不上传 GitHub）
+README.txt
+
 # 数据集中间文件（如不需要上传）
 # Burger_v2/
