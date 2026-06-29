@@ -27,7 +27,7 @@ fprintf('  [1] 从零开始训练\n');
 fprintf('  [2] 从检查点续训\n');
 mode = input('请输入 1 或 2: ');
 
-checkpointDir = fullfile(pwd, 'checkpoints_gan');
+checkpointDir = fullfile(pwd, 'checkpoints_gan_v9');
 if ~isfolder(checkpointDir)
     mkdir(checkpointDir);
 end
@@ -219,7 +219,7 @@ maxGradNormD  = 50;
 maxGradNormG  = 25;
 
 checkpointFrequency  = 500;
-maxCheckpoints       = 5;
+maxCheckpoints       = 999;   % 保留全部检查点
 anomalyWarmup        = 3000;
 anomalyMeanThreshold = 0.25;
 anomalyStdMin        = 0.008;
@@ -292,7 +292,7 @@ fprintf('每 Epoch: %d 步 | 总迭代: %d（%d epoch × %d 步/epoch）\n', ...
     numIterationsPerEpoch, numIterations, numEpochs, numIterationsPerEpoch);
 fprintf('崩溃检测: anomalyWarmup=%d, stdMin=%.3f, meanThreshold=%.2f\n', ...
     anomalyWarmup, anomalyStdMin, anomalyMeanThreshold);
-fprintf('检查点目录: %s（保留最近 %d 个）\n\n', checkpointDir, maxCheckpoints);
+fprintf('检查点目录: %s（每 %d 迭代保存，保留全部）\n\n', checkpointDir, checkpointFrequency);
 
 while epoch < numEpochs && ~monitor.Stop
     epoch = epoch + 1;

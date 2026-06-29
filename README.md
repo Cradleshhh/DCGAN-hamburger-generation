@@ -14,8 +14,7 @@
 food_gan_final/
 ├── code/
 │   ├── project_of_food_final.m   # DCGAN 训练脚本（主程序）
-│   ├── generate_burgers.m        # 加载模型直接生成 25 张图像
-│   ├── generate_test.m           # 批量生成 + D 评分筛选 Top-25
+│   ├── generate_burgers.m        # 模型加载 + D 评分筛选 + 生成（支持单模型/批量）
 │   ├── Burger_modify.m           # 数据集预处理（裁剪 + 白底填充至 256×256）
 │   └── utils/
 │       ├── minibatchStddevLayer.m  # 判别器 Minibatch StdDev 层
@@ -64,31 +63,20 @@ run('code/project_of_food_final.m');
 - 训练过程自动保存检查点至 `checkpoints_gan/` 目录
 - 训练结束生成最终模型 `final_model.mat` 和最佳模型 `best_model.mat`
 
-### 2. 生成图像（直接）
+### 2. 生成图像
 
-使用预训练模型直接生成 25 张图像（`code/generate_burgers.m`）：
+运行 `code/generate_burgers.m`，支持两种模式：
 
 ```matlab
 run('code/generate_burgers.m');
 ```
 
-- 默认加载 `model/hamburger_gan_final.mat`
-- 生成 25 张 128×128 汉堡图像
-- 可选择保存路径
+- **单一模型模式**：手动选择一个 `.mat` 模型文件，生成 200 张候选 → 判别器评分 → Top-25
+- **批量模式**：选择一个文件夹，遍历其中所有 `.mat` 文件逐个处理
+- 每个模型处理完后可选择保存：仅最高分一张（直接存 PNG），或全部 25 张（建子目录）
+- 输出单图 + 5×5 拼贴图 + 评分记录
 
-### 3. 生成图像（D 评分筛选）
-
-批量生成 200 张候选图像，使用判别器自动评分，保留分数最高的 25 张（`code/generate_test.m`）：
-
-```matlab
-run('code/generate_test.m');
-```
-
-- 自动加载模型和工具函数
-- 200 张候选 → 判别器 sigmoid 评分 → Top-25
-- 输出单图 + 5×5 拼贴图 + 评分记录（`scores.txt`）
-
-### 4. 数据预处理
+### 3. 数据预处理
 
 如需重新预处理原始数据集：
 
