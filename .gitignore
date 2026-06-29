@@ -1,0 +1,16 @@
+# MATLAB
+*.m~
+*.mat.old
+*.asv
+
+# 训练检查点（体积大，可重新生成）
+checkpoints_gan/
+checkpoints_gan_*/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 数据集中间文件（如不需要上传）
+# Burger_v2/
