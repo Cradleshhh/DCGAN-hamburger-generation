@@ -2,7 +2,7 @@
 
 基于 DCGAN（Deep Convolutional Generative Adversarial Network）的汉堡图像生成项目。
 
-**作者**: 谢杭洋 | **学号**: 24070001122 | **专业**: 食品科学与工程
+**作者**: Cradles
 
 ## 项目简介
 
