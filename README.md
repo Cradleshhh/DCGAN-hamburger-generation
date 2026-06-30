@@ -14,7 +14,8 @@
 food_gan_final/
 ├── code/
 │   ├── project_of_food_final.m   # DCGAN 训练脚本（主程序）
-│   ├── generate_burgers.m        # 模型加载 + D 评分筛选 + 生成（支持单模型/批量）
+│   ├── generate_burgers.m        # 模型加载 + D 评分筛选 + 生成（支持单模型/批量/FID 批量生成）
+│   ├── FID_test.m                # FID 评分脚本（自动拟合曲线）
 │   ├── Burger_modify.m           # 数据集预处理（裁剪 + 白底填充至 256×256）
 │   └── utils/
 │       ├── minibatchStddevLayer.m  # 判别器 Minibatch StdDev 层
@@ -76,7 +77,20 @@ run('code/generate_burgers.m');
 - 每个模型处理完后可选择保存：仅最高分一张（直接存 PNG），或全部 25 张（建子目录）
 - 输出单图 + 5×5 拼贴图 + 评分记录
 
-### 3. 数据预处理
+### 3. FID 评估
+
+运行 `code/FID_test.m` 对生成图像进行 Fréchet Inception Distance（FID）定量评估：
+
+```matlab
+run('code/FID_test.m');
+```
+
+- 脚本会依次弹出两个对话框：选择**生成图像文件夹**、选择**真实图像数据集文件夹**
+- 生成图像需先用 `generate_burgers.m` **模式 [3]** 批量产出，输出结构为 `iter_500/`、`iter_1000/`、...，每个子文件夹包含 ≥1000 张 PNG
+- 首次运行提取真实图像特征（2–5 分钟），结果自动缓存，后续秒级加载
+- 自动绘制 FID 曲线，叠加**线性拟合**和**对数拟合**趋势线（含 R²）
+
+### 4. 数据预处理
 
 如需重新预处理原始数据集：
 
